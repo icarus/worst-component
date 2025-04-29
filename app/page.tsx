@@ -111,6 +111,20 @@ export default function Home() {
     }
   }, [isOpen])
 
+  // Prevent keyboard interactions
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Prevent Escape key and other keyboard interactions
+      if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
   const handleSuccess = () => {
     setIsOpen(false)
     setShowSuccess(true)
@@ -123,7 +137,7 @@ export default function Home() {
            <div className="bg-white p-6 space-y-2 rounded-xl shadow-xl text-center max-w-md">
              <h2 className="text-2xl font-semibold">¡Éxito!</h2>
              <p className="text-base text-balance mb-6">Felicidades por superar esta horrible experiencia de usuario.</p>
-             <Button variant="outline" onClick={() => setShowSuccess(false)}>
+             <Button variant="outline" onClick={() => setShowSuccess(false)} tabIndex={-1} onKeyDown={(e) => e.preventDefault()}>
                 <RotateCcw />
                 Volver intentar
               </Button>
@@ -131,16 +145,18 @@ export default function Home() {
          </div>
        ) : (
          <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild>
+            <DialogTrigger asChild onKeyDown={(e) => e.preventDefault()}>
               <Button
                 ref={buttonRef}
                 variant="default"
+                tabIndex={-1}
+                onKeyDown={(e) => e.preventDefault()}
                 style={{
                   position: 'absolute',
                   left: `${position.x}%`,
                   top: `${position.y}%`,
                   transform: 'translate(-50%, -50%)',
-                  transition: 'left 0.1s, top 0.1s', 
+                  transition: 'left 0.1s, top 0.1s',
                 }}
                 onClick={() => setIsOpen(true)}
               >
@@ -156,7 +172,7 @@ export default function Home() {
               </DialogHeader>
               <DialogFooter className="justify-between gap-2">
                 <div className="relative w-full rounded-md overflow-clip">
-                  <Button type="button" onClick={() => setIsOpen(false)} className="w-full bg-black/70">
+                  <Button type="button" onClick={() => setIsOpen(false)} className="w-full bg-black/70" tabIndex={-1} onKeyDown={(e) => e.preventDefault()}>
                     No
                   </Button>
                   <div
@@ -167,7 +183,7 @@ export default function Home() {
                     }}
                   />
                 </div>
-                <Button variant="outline" onClick={handleSuccess}>
+                <Button variant="outline" onClick={handleSuccess} tabIndex={-1} onKeyDown={(e) => e.preventDefault()}>
                   Si
                 </Button>
               </DialogFooter>

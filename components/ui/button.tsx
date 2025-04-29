@@ -51,6 +51,8 @@ function Button({
     <Comp
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
+      tabIndex={-1}
+      onKeyDown={(e) => e.preventDefault()}
       {...props}
     />
   )
