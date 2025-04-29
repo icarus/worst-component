@@ -23,7 +23,6 @@ export default function Home() {
     minX: 10, maxX: 90, minY: 10, maxY: 90
   })
 
-  // Update viewport bounds based on button size
   useEffect(() => {
     const updateViewportBounds = () => {
       if (buttonRef.current) {
@@ -32,12 +31,10 @@ export default function Home() {
         const viewportWidth = window.innerWidth
         const viewportHeight = window.innerHeight
 
-        // Calculate percentage of viewport that button occupies
         const buttonWidthPercent = (buttonWidth / viewportWidth) * 100
         const buttonHeightPercent = (buttonHeight / viewportHeight) * 100
 
-        // Ensure button stays fully in viewport by setting bounds
-        const padding = 5 // Extra padding percentage
+        const padding = 5
         setViewportBounds({
           minX: buttonWidthPercent / 2 + padding,
           maxX: 100 - (buttonWidthPercent / 2 + padding),
@@ -64,23 +61,18 @@ export default function Home() {
       const distanceY = e.clientY - buttonCenterY
       const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY)
 
-      // Increased repulsion distance and made movement more drastic
       const repulsionDistance = 300
       if (distance < repulsionDistance) {
-        // Calculate repulsion magnitude based on proximity (closer = stronger repulsion)
         const repulsionFactor = 1 - (distance / repulsionDistance)
         const maxMoveAmount = 80
         const moveAmount = maxMoveAmount * repulsionFactor
 
-        // Calculate direction vector and normalize
         const dirX = distanceX / distance
         const dirY = distanceY / distance
 
-        // Apply movement in opposite direction of mouse
         const moveX = -dirX * moveAmount
         const moveY = -dirY * moveAmount
 
-        // Keep button within viewport boundaries
         const newX = Math.max(viewportBounds.minX, Math.min(viewportBounds.maxX, position.x + moveX))
         const newY = Math.max(viewportBounds.minY, Math.min(viewportBounds.maxY, position.y + moveY))
 
@@ -99,7 +91,6 @@ export default function Home() {
     if (isOpen) {
       setTimerProgress(0)
 
-      // Update progress every 30ms for smooth animation
       animationTimer = setInterval(() => {
         setTimerProgress(prev => {
           const newProgress = prev + (100 / (650 / 30))
@@ -149,7 +140,7 @@ export default function Home() {
                   left: `${position.x}%`,
                   top: `${position.y}%`,
                   transform: 'translate(-50%, -50%)',
-                  transition: 'left 0.1s, top 0.1s', // Faster transition for more responsive feel
+                  transition: 'left 0.1s, top 0.1s', 
                 }}
                 onClick={() => setIsOpen(true)}
               >
