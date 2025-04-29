@@ -173,7 +173,7 @@ export default function Home() {
               <DialogFooter className="justify-between gap-2">
                 <div className="relative w-full rounded-md overflow-clip">
                   <Button type="button" onClick={() => setIsOpen(false)} className="w-full bg-black/70" tabIndex={-1} onKeyDown={(e) => e.preventDefault()}>
-                    No
+                    No (Quedan {Math.ceil((650 * (100 - timerProgress)) / 100 / 1000)}s)
                   </Button>
                   <div
                     className="absolute top-0 left-0 bottom-0 bg-black opacity-50 mix-blend-overlay pointer-events-none"

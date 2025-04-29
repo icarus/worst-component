@@ -7,12 +7,13 @@ import { XIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 function Dialog({
+  modal = true,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Root>) {
   return <DialogPrimitive.Root
     data-slot="dialog"
     // Force modal mode to true to prevent Escape key from closing the dialog
-    modal={true}
+    modal={modal}
     {...props}
   />
 }
@@ -56,6 +57,8 @@ function DialogOverlay({
         "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
         className
       )}
+      tabIndex={-1}
+      onKeyDown={(e) => e.preventDefault()}
       {...props}
     />
   )
@@ -82,6 +85,9 @@ function DialogContent({
             e.stopPropagation();
           }
         }}
+        // Prevent focus management
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        onCloseAutoFocus={(e) => e.preventDefault()}
         {...props}
       >
         {children}
