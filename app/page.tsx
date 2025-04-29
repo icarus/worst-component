@@ -166,7 +166,7 @@ export default function Home() {
               <DialogFooter className="justify-between gap-2">
                 <div className="relative w-full rounded-md overflow-clip">
                   <Button type="button" onClick={() => setIsOpen(false)} className="w-full bg-black/70">
-                    Cerrar
+                    No
                   </Button>
                   <div
                     className="absolute top-0 left-0 bottom-0 bg-black opacity-50 mix-blend-overlay pointer-events-none"
@@ -177,7 +177,7 @@ export default function Home() {
                   />
                 </div>
                 <Button variant="outline" onClick={handleSuccess}>
-                  Continuar
+                  Si
                 </Button>
               </DialogFooter>
             </DialogContent>
